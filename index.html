@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cell Status(Ricana)</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./Assets/Css/style.css"/>
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="header-left">
+      <div class="header-icon">⚡</div>
+      <div>
+        <h1>Cell <span>Status</span> (Ricana)</h1>
+      </div>
+      <span class="badge" id="rowCount">22 cells</span>
+    </div>
+    <div class="search-wrap">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Search cells…" oninput="renderTable()"/>
+    </div>
+  </header>
+
+  <!-- ── TOOLBAR ── -->
+  <div class="toolbar">
+    <button class="btn btn-add"   onclick="openModal()">＋ Add Row</button>
+    <button class="btn btn-edit"  onclick="editSelected()">✎ Edit</button>
+    <button class="btn btn-del"   onclick="deleteSelected()">✕ Delete</button>
+    <div class="toolbar-right">
+      <button class="btn btn-reset" onclick="resetData()">↺ Reset</button>
+      <button class="btn btn-save"  onclick="saveData()">💾 Save</button>
+      <span id="statusMsg"></span>
+    </div>
+  </div>
+
+  <!-- ── LEGEND ── -->
+  <div class="legend">
+    <span class="legend-label">Legend</span>
+    <span class="legend-item"><span class="dot" style="background:var(--good)"></span> Good</span>
+    <span class="legend-item"><span class="dot" style="background:var(--average)"></span> Average</span>
+    <span class="legend-item"><span class="dot" style="background:var(--bad)"></span> Bad</span>
+    <span class="legend-item"><span class="dot" style="background:var(--notgood)"></span> Not so Good</span>
+    <span class="legend-item"><span class="dot" style="background:var(--none-c)"></span> None / Unknown</span>
+  </div>
+
+  <!-- ── TABLE ── -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortBy('cell')"         data-col="cell">        #Cells       <span class="sort-icon">↕</span></th>
+          <th onclick="sortBy('cable_status')" data-col="cable_status">Cable Status <span class="sort-icon">↕</span></th>
+          <th onclick="sortBy('need')"         data-col="need">        Need         <span class="sort-icon">↕</span></th>
+          <th onclick="sortBy('break_time')"   data-col="break_time">  Break Time   <span class="sort-icon">↕</span></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span id="footerInfo">Data auto-saved in browser localStorage</span>
+    <span id="selInfo">No row selected</span>
+  </footer>
+
+  <!-- ── MODAL ── -->
+  <div class="modal-bg" id="modalBg" onclick="closeModalOnBg(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add New Row</h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <label>#Cell Name</label>
+          <input type="text" id="f_cell" placeholder="e.g. Cell 23"/>
+        </div>
+        <div class="field">
+          <label>Cable Status</label>
+          <input type="text" id="f_cable" placeholder="e.g. Good, Bad, Average…"/>
+        </div>
+        <div class="field">
+          <label>Need</label>
+          <input type="text" id="f_need" placeholder="e.g. Dust cleaning, Organize Wire"/>
+        </div>
+        <div class="field">
+          <label>Break Time</label>
+          <input type="text" id="f_break" placeholder="e.g. 9:00 am, Night Shift, Unknown"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-reset" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-save"  onclick="saveRow()">Save Row</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./Assets/JS/script.js"></script>
+</body>
+</html>
